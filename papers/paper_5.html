@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Paper Summary - Soham</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1, h2, h3 {
+            color: #00ff9d;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .content-block {
+            background-color: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        a {
+            color: #00ff9d;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Paper Title -->
+        <section>
+            <h1><span style="color: #fff;"> Natural Language Supervision in Vision tasks</span></h1>
+            <p><a href="papers_pdf/Desai_VirTex.pdf" target="_blank"><strong>Paper 1:</strong></a> VirTex: Learning Visual Representations from Textual Annotations </p>
+            <p><a href="papers_pdf/Learning_Visual_Representations_with_Caption_Annotations.pdf" target="_blank"><strong>Paper 2:</strong></a> Learning Visual Representations with Caption Annotations </p>
+            <p><a href="papers_pdf/CONVirt.pdf" target="_blank"><strong>Paper 3:</strong></a> Contrastive Learning of Medical Visual Representations from Paired Images and Text</p>
+
+        <!-- Problem Solved -->
+        <section>
+            <h2>Problem Solved</h2>
+            <p>
+                <a href="https://openai.com/index/clip/" target="_blank">CLIP</a> marked a groundbreaking moment in computer vision by reaffirming the
+                potential of Natural Language Supervision for generalisation in vision tasks.<a href=""> Read this blog for more information on natural language supervision and
+                generalisation</a>. CLIP used the unstructured text captions from the internet to train vision models that are inherently more generalizable. It also showed how
+                contrastive methods can produce robust, transferable features, setting a new paradigm for vision-language integration (multimodal understanding).
+
+                Building on CLIP's foundation, CoOp (Context Optimization) and its successor CoCoOp (Conditional Context Optimization) address one of the key challenges in
+                adapting such general-purpose models: prompt engineering. These methods intoduce learnable context vectors, eliminating the needof devising sub-optimal prompts
+                by humans. CoOp and CoCoOp allow the model to dynamically optimize prompts tailored to specific tasks, significantly improving performance while preserving
+                generalization capabilities. Both of these methods freeze the weights of CLIP and only optimize the context vectors.
+                
+            </p>
+        </section>
+
+        <!-- Methodology -->
+        <section>
+            <h2>Methodology - CoOp</h2>
+            <p>
+                CoOp turns context words in a prompt into a set of learnable vectors and, with only a few labeled images for learning, can achieve huge improvements over
+                intensively-tuned manual prompts. CoOp models a prompt’s context words as <i>learnable vectors</i>, which can be initialized either with random values or
+                pre-trained word embeddings. It offers two distinct implementations to suit tasks of varying complexity: 
+                <ol>
+                    <li><u>Unified Context</u>: A shared context across all classes, which performs effectively for most categories.</li>
+                    <li><u>Class-Specific Context</u>: A unique set of context tokens for each class, particularly beneficial for fine-grained classification tasks.</li></br>
+                </ol>
+                
+                During training, CoOp minimizes prediction errors using the <i>cross-entropy loss</i>, focusing solely on optimizing the learnable context vectors while keeping
+                the pre-trained parameters of the underlying model fixed. Gradients propagate through the text encoder, leveraging CLIP's pre-trained knowledge to learn
+                task-specific context efficiently.</br></br>
+
+                <img src="assets/paper_4/CoOp.png" alt="Architecture of CoOp cocntrasted with the architecture of CLIP" style="max-width: 100%; height: auto;"></br></br>
+
+
+                <u>Breaking it down</u>: The CLIP is trained as-is using the alt-text datset extracted from the internet - we learn joint image and text embeddings from this.
+                When using this for some other clssification task, rather than using "The image of a [CLASS]" as a prompt, we use the learnable context vectors. In cases of unified
+                context, it is [V<sub>1</sub>, V<sub>2</sub>, ..., V<sub>n</sub>], where n is the number of context words. In case of class-specific context, we have a unique set of
+                context words for each class [V<sub>1</sub><sup>1</sup>, V<sub>2</sub><sup>1</sup>, ..., V<sub>n</sub><sup>1</sup>] for class 1, and
+                [V<sub>1</sub><sup>2</sup>, V<sub>2</sub><sup>2</sup>, ..., V<sub>n</sub><sup>2</sup>] for class 2, and so on. This same is used while inference.
+            </p>
+        </section>
+
+        <section>
+            <h2>Methodology - CoCoOp</h2>
+            <p>
+                CoCoOp builds on CoOp by incorporating a lightweight neural network to generate an input-conditional token (vector) for each image.
+                Unlike CoOp’s static prompts, which are tailored to each task or class, CoCoOp’s dynamic prompts adapt to each individual instance, making them less sensitive to class shifts.
+                In CoOp, the learned context overfits the base classes, failing to capture more generalizable elements needed for broader scene recognition. The static context in CoOp is
+                optimized solely for a specific set of training classes. In contrast, <i>CoCoOp conditions the prompt on each input instance (image)</i>, avoiding the overfitting issue of static context.</br></br>
+
+                A simple approach to implement CoCoOp would involve building M neural networks to generate M context tokens, but this would result in a model significantly larger than CoOp due
+                to the increased number of parameters (M × neural network size). Instead like the M context vectors from CoOp are learnt using a lightweight neural network, Meta-Net, which generates
+                a conditional token for each input. This token is then combined with the context vectors, achieving efficiency while improving the model's adaptability. </br></br>
+                <img src="assets/paper_4/CoCoOp.png" alt="CoCoOp architecture" style="max-width: 100%; height: auto;">
+                CoCoOp architecture has two learnable parameters - first is the context like CoOp, and the other is the Meta-Net, which generates the conditional token for each input image.
+
+            </p>
+        </section>
+
+        <!-- Personal Notes -->
+        <section>
+            <h2>Personal Notes</h2>
+            <p>
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </p>
+        </section>
+
+        <!-- References -->
+        <section>
+            <h2>References</h2>
+            <p>
+                This blog is not academic in nature, and the content is taken from a lot of sources. The primary source of information are the <a href="https://arxiv.org/abs/2103.00350" target="_blank"> CoOp</a> and <a href="https://arxiv.org/abs/2203.05557" target="_blank"> CoCoOp</a> papers themselves.
+                Apart from them the following sources were used (non-exhaustive list):
+                <ul>
+                    <li><a href="https://arxiv.org/abs/2103.00020" target="_blank"> Learning Transferable Visual Models From Natural Language Supervision (CLIP)</a></li>
+                    
+                </p>
+        </section>
+    </div>
+</body>
+</html>
