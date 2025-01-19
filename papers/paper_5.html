@@ -79,78 +79,114 @@
         <!-- Paper Title -->
         <section>
             <h1><span style="color: #fff;"> Natural Language Supervision in Vision tasks</span></h1>
-            <p><a href="papers_pdf/Desai_VirTex.pdf" target="_blank"><strong>Paper 1:</strong></a> VirTex: Learning Visual Representations from Textual Annotations </p>
-            <p><a href="papers_pdf/Learning_Visual_Representations_with_Caption_Annotations.pdf" target="_blank"><strong>Paper 2:</strong></a> Learning Visual Representations with Caption Annotations </p>
-            <p><a href="papers_pdf/CONVirt.pdf" target="_blank"><strong>Paper 3:</strong></a> Contrastive Learning of Medical Visual Representations from Paired Images and Text</p>
+            <p><a href="papers_pdf/Desai_VirTex.pdf" target="_blank"><strong>Paper 1:</strong></a> VirTex: Learning Visual Representations from Textual Annotations<br>
+            <a href="papers_pdf/ICMLM.pdf" target="_blank"><strong>Paper 2:</strong></a> Learning Visual Representations with Caption Annotations<br>
+            <a href="papers_pdf/CONVirt.pdf" target="_blank"><strong>Paper 3:</strong></a> Contrastive Learning of Medical Visual Representations from Paired Images and Text<br>
+            <a href="papers_pdf/CLIP.pdf" target="_blank"><strong>Paper 4:</strong></a> Learning Transferable Visual Models From Natural Language Supervision</p>
 
         <!-- Problem Solved -->
         <section>
             <h2>Problem Solved</h2>
             <p>
-                <a href="https://openai.com/index/clip/" target="_blank">CLIP</a> marked a groundbreaking moment in computer vision by reaffirming the
-                potential of Natural Language Supervision for generalisation in vision tasks.<a href=""> Read this blog for more information on natural language supervision and
-                generalisation</a>. CLIP used the unstructured text captions from the internet to train vision models that are inherently more generalizable. It also showed how
-                contrastive methods can produce robust, transferable features, setting a new paradigm for vision-language integration (multimodal understanding).
-
-                Building on CLIP's foundation, CoOp (Context Optimization) and its successor CoCoOp (Conditional Context Optimization) address one of the key challenges in
-                adapting such general-purpose models: prompt engineering. These methods intoduce learnable context vectors, eliminating the needof devising sub-optimal prompts
-                by humans. CoOp and CoCoOp allow the model to dynamically optimize prompts tailored to specific tasks, significantly improving performance while preserving
-                generalization capabilities. Both of these methods freeze the weights of CLIP and only optimize the context vectors.
-                
+                The standard approach to vision related tasks is to take a large manually annotated dataset and train on it. This reaches SOTA and also learns representations useful for downstream tasks. But this approach has major
+                limitations. The cost and complexity of annotating datasets is considerable, especially when the class taxonomy is fine-grained requiring expert knowledge (e.g.: in most medical cases). The natural consequence to this problem
+                is to either think of data sources that are easily available or to use unsupervised learning methods. Unsupervised learning methods don't directly use the labels of the datasets,
+                but are highly data intensive, and even more so when they are deprived of the implicit benefits from careful selection and the resulting underlying structure of the generally used dataset.</br></br>
+                 
+                Interestingly, data often comes with informative metadata for free. For instance, user tags associated with images can be used as image labels. Even richer, companion text for images, is sometimes available for free. For example
+                in medical domain a lot of images come with texts like reports, which can be used as labels.
+                To utilize this type of data, the task is reframed to: <i>Can we train transferable visual representations from limited sets
+                of image-caption pairs? If so, how should we formulate the interaction between images and captions?</i> All these 4 papers aim to model this in different ways.
             </p>
         </section>
 
         <!-- Methodology -->
         <section>
-            <h2>Methodology - CoOp</h2>
+            <h2>Methodology - VirTex</h2>
             <p>
-                CoOp turns context words in a prompt into a set of learnable vectors and, with only a few labeled images for learning, can achieve huge improvements over
-                intensively-tuned manual prompts. CoOp models a prompt’s context words as <i>learnable vectors</i>, which can be initialized either with random values or
-                pre-trained word embeddings. It offers two distinct implementations to suit tasks of varying complexity: 
-                <ol>
-                    <li><u>Unified Context</u>: A shared context across all classes, which performs effectively for most categories.</li>
-                    <li><u>Class-Specific Context</u>: A unique set of context tokens for each class, particularly beneficial for fine-grained classification tasks.</li></br>
-                </ol>
+                The method that they use is to jointly train a ConvNet (ResNet50) and Transformer from scratch to generate natural language captions for images. Then these learned
+                features can be transferred to downstream visual recognition tasks, discarding the transformer. The paper makes the argument that natural language supervision gives better results than image-label paradigm
+                because of its semantic density. Captions provide a semantically denser learning signal than unsupervised contrastive methods and supervised classification.
+                The image used in paper explains this argument vert potently.</br></br>
                 
-                During training, CoOp minimizes prediction errors using the <i>cross-entropy loss</i>, focusing solely on optimizing the learnable context vectors while keeping
-                the pre-trained parameters of the underlying model fixed. Gradients propagate through the text encoder, leveraging CLIP's pre-trained knowledge to learn
-                task-specific context efficiently.</br></br>
+                <img src="assets/paper_5/semantic_density.png" alt="Semantic density in various types of labels" style="max-width: 100%; height: auto;"></br></br>
 
-                <img src="assets/paper_4/CoOp.png" alt="Architecture of CoOp cocntrasted with the architecture of CLIP" style="max-width: 100%; height: auto;"></br></br>
+                They train two transformers for bidirectional captioning - one from left to right (forward model) and the other right to left (backward model).
+                The paper notes that <i>masked language models</i> give worse performance in this task than the bidirectional models. </br></br>
 
+                <img src="assets/paper_5/VirTex_architecture.png" alt="VirTex architecture" style="max-width: 100%; height: auto;"></br></br>   
 
-                <u>Breaking it down</u>: The CLIP is trained as-is using the alt-text datset extracted from the internet - we learn joint image and text embeddings from this.
-                When using this for some other clssification task, rather than using "The image of a [CLASS]" as a prompt, we use the learnable context vectors. In cases of unified
-                context, it is [V<sub>1</sub>, V<sub>2</sub>, ..., V<sub>n</sub>], where n is the number of context words. In case of class-specific context, we have a unique set of
-                context words for each class [V<sub>1</sub><sup>1</sup>, V<sub>2</sub><sup>1</sup>, ..., V<sub>n</sub><sup>1</sup>] for class 1, and
-                [V<sub>1</sub><sup>2</sup>, V<sub>2</sub><sup>2</sup>, ..., V<sub>n</sub><sup>2</sup>] for class 2, and so on. This same is used while inference.
+            </p>
+        </section>
+        <section>   
+            <h2>Methodology - CONVirt</h2>
+            <p>
+                This method closely resembles <a href="https://openai.com/index/clip/" target="_blank">CLIP</a>. While the paper focuses on medical images, the approach mirrors CLIP's core methodology:
+                a vision encoder (ResNet50 instead of ViT) and a text encoder (ClinicalBERT replacing the transformer block). It optimizes cosine similarity for matching image-text pairs while minimizing
+                it for mismatched pairs. They use two different contrasive loss functions - image-to-text (l<sub>i</sub><sup>v→u</sup>) and text-to-image (l<sub>i</sub><sup>u→v</sup>). While CLIP uses a
+                single loss, but it is highly similar to this one.</br></br>
+                
+                
+                <img src="assets/paper_5/CONVirt_architecture.png" alt="CONVirt architecture" style="max-width: 100%; height: auto;"></br></br>
+
+                The paper also claims that the ConVIRT framework is agnostic to the specific choice of image and text encoders, transformations and projection functions. CLIP is a natural consequence to this type of framework+claim.
+                A major difference between CLIP and ConVIRT is in their objectives. While CONVirt tries to learn better embeddings from a small dataset (217k image-text pairs), CLIP's aim is to learn robust features from web-level dataset (400M image-text pairs).
+
             </p>
         </section>
 
         <section>
-            <h2>Methodology - CoCoOp</h2>
+            <h2>Methodology - ICMLM</h2>
             <p>
-                CoCoOp builds on CoOp by incorporating a lightweight neural network to generate an input-conditional token (vector) for each image.
-                Unlike CoOp’s static prompts, which are tailored to each task or class, CoCoOp’s dynamic prompts adapt to each individual instance, making them less sensitive to class shifts.
-                In CoOp, the learned context overfits the base classes, failing to capture more generalizable elements needed for broader scene recognition. The static context in CoOp is
-                optimized solely for a specific set of training classes. In contrast, <i>CoCoOp conditions the prompt on each input instance (image)</i>, avoiding the overfitting issue of static context.</br></br>
+                This paper tries to model the interactions between images and captions by modeling this task as multiple different proxy tasks. All these tasks warrant our attention as they are all pretty intersting design problems.
+                The paper doesn't make firm claims about why one of the proxies achieve the highest scores.<br><br>
 
-                A simple approach to implement CoCoOp would involve building M neural networks to generate M context tokens, but this would result in a model significantly larger than CoOp due
-                to the increased number of parameters (M × neural network size). Instead like the M context vectors from CoOp are learnt using a lightweight neural network, Meta-Net, which generates
-                a conditional token for each input. This token is then combined with the context vectors, achieving efficiency while improving the model's adaptability. </br></br>
-                <img src="assets/paper_4/CoCoOp.png" alt="CoCoOp architecture" style="max-width: 100%; height: auto;">
-                CoCoOp architecture has two learnable parameters - first is the context like CoOp, and the other is the Meta-Net, which generates the conditional token for each input image.
+                The method begins with a straightforward approach called <u>Tag Prediction (TP)</u>. Here, the goal is to treat the image-caption pairs as a multi-label image classification problem. For each image, a label vector is created
+                based on concepts appearing in the caption. These concepts can be derived using various techniques e.g.: taking most frequent n-grams, LDA to extract latent topics, etc.
+                A somewhat better approach, <u>TPPostag</u> changes its method of using the captions - it uses part-of-speech tags (nouns, adjectives, verbs) to generate more semantically grounded label set.<br>
+
+                Further <u>TPCluster</u> incorporates the structure of the entire caption. Using BERT's [CLS] token to extract sentence-level representations, captions are grouped into clusters with k-means. These cluster assignments are used
+                as labels for training.<br><br>
+
+                The above methods tend to lose finer details, especially for long captions. Image-Conditioned Masked Language Model (ICMLM) uses the concept of Masked Language Models and predicts masked tokens in captions using both visual and textual features.
+                This is the major proposition of this paper, but it also develops two better performing variations of this task.<br>
+
+                1. <u>ICMLMtfm</u> uses a transformer encoder (<i>tfm</i>) to fuse visual and textual features.<br>
+                2. <u>ICMLMatt-fc</u> uses pairwise attention (<i>att</i>) and fully connected (<i>fc</i>) layers for feature fusion.<br>
+                These are just proxies for learning good features, only the CNN is used during target task evaluations.<br><br>
+
+                <img src="assets/paper_5/ICMLM_architecture.png" alt="ICMLM architecture" style="max-width: 100%; height: auto;"></br></br>
 
             </p>
         </section>
 
+        <section>
+            <h2>Methodology - CLIP</h2>
+            <p>
+                CLIP (Contrastive Language-Image Pre-training) learns visual representations by predicting which caption, out of a set of randomly sampled captions, goes with a given image. The core idea is to learn a  contrasive joint embedding space
+                for images and text, such that semantically similar images and texts are close to each other, while dissimilar ones are far apart. The architecture consists of two encoders: an image encoder and a text encoder. The original paper
+                explores several architectures for the image encoder, including both ResNet-based variants and Vision Transformers (ViT). For the text encoder, a Transformer is used.<br><br>
+
+                For each image in a batch, CLIP calculates the embeddings of the image using the image encoder and the embeddings of all the captions in the same batch using the text encoder.
+                The dot product between the image embedding and each of the caption embeddings represents the similarity score between them. The objective is to maximize the cosine similarity
+                between the embeddings of the actual image-caption pair in the batch, and minimize the similarity between the image and all other (incorrect) captions in the batch. Similarly,
+                this is done for each caption against all images.<br><br>
+
+                The training process encourages the image encoder to learn features that are relevant to the semantic content of the
+                corresponding text, and vice-versa. Below is a visual representation of this process both for training and inference.<br><br>
+
+                <img src="assets/paper_5/CLIP_architecture.png" alt="CLIP architecture" style="max-width: 100%; height: auto;"></br></br>
+
+                A crucial aspect of CLIP is the scale of the training data. It was trained on a massive dataset of 400 million image-text pairs collected from the internet. This large-scale pre-training enables CLIP to learn highly robust and generalizable visual representations that transfer well to a wide range of downstream vision tasks, even in a zero-shot manner, where no task-specific training data is required.
+            </p>
+        </section>
         <!-- Personal Notes -->
         <section>
             <h2>Personal Notes</h2>
             <p>
                 <ul>
-                    <li></li>
-                    <li></li>
+                    <li>Good papers effectively use attention/saliency maps/t-SNE visualizations to showcase the robustness and interpretability of their methods. See Fig.1 ICMLM, Fig.6 VirTex, Fig.4 CONVirt. Also see the t-SNE from <a href="https://arxiv.org/abs/2210.03117" target="_blank">MaPLe</a> paper.</li>
+                    <li>The bitter lesson: "general methods that leverage computation are ultimately the most effective". CONVirt does everything that CLIP does, but for specifically medical domain. CLIP is extremely more popular than CONVirt.</li>
                 </ul>
             </p>
         </section>
@@ -159,10 +195,10 @@
         <section>
             <h2>References</h2>
             <p>
-                This blog is not academic in nature, and the content is taken from a lot of sources. The primary source of information are the <a href="https://arxiv.org/abs/2103.00350" target="_blank"> CoOp</a> and <a href="https://arxiv.org/abs/2203.05557" target="_blank"> CoCoOp</a> papers themselves.
-                Apart from them the following sources were used (non-exhaustive list):
+                This blog is not academic in nature, and the content is taken from a lot of sources. The primary source of information are the <a href="papers_pdf/Desai_VirTex.pdf" target="_blank"> VirTex</a>, <a href="papers_pdf/CONVirt.pdf" target="_blank"> CONVirt</a>, <a href="papers_pdf/ICMLM.pdf" target="_blank"> ICMLM</a> and <a href="papers_pdf/CLIP.pdf" target="_blank"> CLIP</a> papers themselves.
+                Apart from them following are some of the sources (non-exhaustive list):
                 <ul>
-                    <li><a href="https://arxiv.org/abs/2103.00020" target="_blank"> Learning Transferable Visual Models From Natural Language Supervision (CLIP)</a></li>
+                    <li><a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank"> The Bitter Lesson</a></li>
                     
                 </p>
         </section>
