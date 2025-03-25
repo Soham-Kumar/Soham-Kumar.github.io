@@ -1,25 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Your Name</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Projects - Soham</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <script src="scripts/theme.js"></script>
 </head>
+
 <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="reading.html">Reading</a>
-        <a href="projects.html">Projects</a>
-    </nav>
+    <div class="wrapper">
+        <header>
+            <h1>Projects</h1>
+             <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="reading.html">Reading</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <h1>Projects</h1>
+        <section>
+            <div class="section">
+                <h2><a href="#">Project Title 1</a></h2>
+                <p>Brief description of the project 1...</p>
+            </div>
 
-    <div class="section">
-        <h2><a href="github-repo-link">Project Title</a></h2>
-        <p>Brief description of the project...</p>
+            <div class="section">
+                <h2><a href="#">Project Title 2</a></h2>
+                <p>Brief description of the project 2...</p>
+            </div>
+
+            <!-- Repeat for more projects -->
+        </section>
+
+        <footer>
+            <p><button class="material-symbols-sharp" id="theme-toggle" title="Toggle dark mode"
+                    onclick="toggleDarkMode()"></button></p>
+            <p>Maintained by <a href="https://github.com/your-github-username">Soham Kumar</a></p>
+            <p><small>Hosted on GitHub Pages</small></p>
+        </footer>
     </div>
-
-    <!-- Repeat for more projects -->
+     <script src="scripts/scale.fix.js"></script>
+     <script>
+        // Set initial theme based on system preference or local storage
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !isDarkMode()) {
+            toggleDarkMode(); // Enable dark mode if system prefers dark and not already set
+        } else if (isDarkMode()) {
+            document.documentElement.classList.add('theme-dark'); // Ensure dark mode is applied if stored in local storage
+        }
+        updateThemeButtonIcon(); // Set initial icon
+    </script>
 </body>
+
 </html>

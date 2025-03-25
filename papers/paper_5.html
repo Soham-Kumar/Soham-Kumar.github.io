@@ -107,7 +107,7 @@
                 The method that they use is to jointly train a ConvNet (ResNet50) and Transformer from scratch to generate natural language captions for images. Then these learned
                 features can be transferred to downstream visual recognition tasks, discarding the transformer. The paper makes the argument that natural language supervision gives better results than image-label paradigm
                 because of its semantic density. Captions provide a semantically denser learning signal than unsupervised contrastive methods and supervised classification.
-                The image used in paper explains this argument vert potently.</br></br>
+                The image used in paper explains this argument very potently.</br></br>
                 
                 <img src="assets/paper_5/semantic_density.png" alt="Semantic density in various types of labels" style="max-width: 100%; height: auto;"></br></br>
 
@@ -123,8 +123,7 @@
             <p>
                 This method closely resembles <a href="https://openai.com/index/clip/" target="_blank">CLIP</a>. While the paper focuses on medical images, the approach mirrors CLIP's core methodology:
                 a vision encoder (ResNet50 instead of ViT) and a text encoder (ClinicalBERT replacing the transformer block). It optimizes cosine similarity for matching image-text pairs while minimizing
-                it for mismatched pairs. They use two different contrasive loss functions - image-to-text (l<sub>i</sub><sup>v→u</sup>) and text-to-image (l<sub>i</sub><sup>u→v</sup>). While CLIP uses a
-                single loss, but it is highly similar to this one.</br></br>
+                it for mismatched pairs. They use two different contrasive loss functions - image-to-text (l<sub>i</sub><sup>v→u</sup>) and text-to-image (l<sub>i</sub><sup>u→v</sup>).</br></br>
                 
                 
                 <img src="assets/paper_5/CONVirt_architecture.png" alt="CONVirt architecture" style="max-width: 100%; height: auto;"></br></br>
