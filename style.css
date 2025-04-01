@@ -1,0 +1,421 @@
+/* styles.css */
+
+:root {
+    /* Minimal Light Theme Palette */
+    --bg-color: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #777777;
+    --accent-color: #007AFF; /* Standard Apple blue, clean */
+    --accent-hover: #0056b3;
+    --border-color: #eeeeee; /* Very light border */
+    --link-color: var(--accent-color);
+    --tag-bg: #f0f0f0; /* Light grey background for tags */
+    --tag-text: #555555; /* Darker grey text for tags */
+    --code-bg: #f8f8f8; /* Background for code blocks/inline */
+    --blockquote-bg: #f9f9f9; /* Slightly off-white for blockquotes */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.7; /* Slightly increased for readability in longer text */
+    color: var(--text-primary);
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem; /* Keep some body padding */
+    font-size: 16px; /* Standard base font size */
+}
+
+/* Wrapper for consistent width and centering */
+.content-wrapper {
+    width: 100%;
+    max-width: 700px; /* Consistent max-width */
+}
+
+/* --- Header (Main Site Header on Index) --- */
+header#site-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    /* border-bottom: 1px solid var(--border-color); Optional */
+}
+
+header#site-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+.profile-info {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.profile-info > div {
+    margin: 0.15rem 0;
+}
+
+.profile-info .professional {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* --- Navigation --- */
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--link-color);
+    font-weight: 500;
+    padding: 0.2rem 0;
+    border-radius: 4px;
+    transition: color 0.2s ease-in-out;
+}
+
+nav a:hover,
+nav a:focus {
+    color: var(--accent-hover);
+    text-decoration: underline;
+    outline: none;
+}
+
+/* --- General Content Styling --- */
+section {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+}
+
+/* Specific header for content pages (Paper/Blog) */
+header.page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+header.page-header h1 {
+    font-size: 2rem; /* Slightly smaller than site title */
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+    letter-spacing: -0.4px;
+}
+
+.page-meta {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+.page-meta span { margin-right: 1em;} /* Space out meta items */
+.page-meta small { margin-right: 0em; } /* Reset small margin if used inside meta */
+
+/* Back link for sub-pages */
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.back-link:hover {
+    text-decoration: underline;
+    color: var(--accent-hover);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    margin-top: 1.5em; /* Add space above headings */
+    margin-bottom: 0.8em; /* Space below headings */
+    line-height: 1.3;
+}
+
+h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    border-bottom: none; /* Ensure no default underlines */
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Paragraphs and Links */
+p {
+    margin-bottom: 1.2rem; /* Consistent paragraph spacing */
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover,
+a:focus {
+    color: var(--accent-hover);
+    text-decoration: underline;
+    outline: none;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 1.2rem;
+    padding-left: 1.5rem; /* Standard indentation */
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+/* Card List (Used on Home Page) */
+.card-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.card-list li {
+    margin-bottom: 1rem;
+    padding: 0.2rem 0;
+}
+
+.card-list li:last-child {
+    margin-bottom: 0;
+}
+
+.card-list a {
+    color: var(--text-primary); /* Links within card list are primary text color */
+    font-weight: 500;
+    display: inline;
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+.card-list a:hover {
+    color: var(--accent-color); /* Hover color is accent */
+    text-decoration: underline;
+}
+
+/* Tag Styling */
+small.tag { /* More specific selector for tags */
+    font-size: 0.75em;
+    font-weight: 500;
+    display: inline-block;
+    white-space: nowrap;
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+    vertical-align: baseline;
+    margin: 0 0.3rem 0.2rem 0;
+    line-height: 1.4;
+    text-decoration: none; /* Ensure no underline */
+}
+.page-meta small.tag { /* Tags in page meta might need slight adjustment */
+    margin-left: 0.3rem;
+}
+
+/* Project Item Styling (Home Page) */
+.project-item .project-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    margin-bottom: 0.25rem;
+}
+
+.project-item .project-title a {
+    font-weight: inherit;
+    font-size: inherit;
+    color: inherit;
+    margin-right: 0;
+}
+.project-item .project-title a:hover {
+    color: var(--accent-color);
+}
+
+.project-item .project-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.5rem; /* Add space before tags */
+}
+
+.card-list li.project-item {
+    margin-bottom: 1.25rem;
+}
+
+/* --- Content Elements (for Paper/Blog) --- */
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Prevents extra space below image */
+    margin: 1.5rem auto; /* Center images with margin */
+    border-radius: 4px; /* Optional: slight rounding */
+    border: 1px solid var(--border-color); /* Subtle border */
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 3px solid var(--accent-color);
+    margin: 1.5rem 0;
+    padding: 0.8rem 1.2rem;
+    background-color: var(--blockquote-bg);
+    color: var(--text-secondary); /* Slightly muted text */
+    border-radius: 0 4px 4px 0; /* Rounding on the right */
+    font-style: italic;
+}
+
+blockquote p {
+    margin-bottom: 0.5rem; /* Tighter spacing inside blockquote */
+}
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+blockquote footer {
+    margin-top: 0.8rem;
+    font-style: normal; /* Override italic if needed */
+    font-size: 0.9em;
+    color: var(--text-primary); /* Cite source more clearly */
+    font-weight: 500;
+}
+blockquote footer::before {
+    content: "— "; /* Em dash before citation */
+}
+
+/* Code */
+code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.875em; /* Slightly smaller than body text */
+    background-color: var(--code-bg);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+pre code { /* Styles for code blocks */
+    display: block;
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: 4px;
+    line-height: 1.5;
+}
+pre { margin-bottom: 1.2rem; }
+
+
+/* Dialogue Block Styling (Blog) */
+.dialogue-block {
+    margin: 1.5rem 0;
+    padding: 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: #fdfdfd; /* Very slightly off-white */
+}
+.dialogue-block p {
+    margin-bottom: 0.7rem;
+}
+.dialogue-block p:last-child {
+    margin-bottom: 0;
+}
+.dialogue-speaker {
+    font-weight: 600;
+    color: var(--text-primary); /* Speaker name stands out */
+    margin-right: 0.5em;
+}
+
+/* Superscript Links (References) */
+sup {
+    line-height: 0; /* Prevent affecting line height */
+    vertical-align: super; /* Ensure proper alignment */
+    font-size: 0.75em; /* Smaller font size */
+}
+sup a {
+    text-decoration: none; /* No underline for reference numbers */
+    padding: 0 0.1em;
+}
+sup a:hover {
+    text-decoration: underline;
+}
+
+/* --- Footer --- */
+footer#site-footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    padding-top: 1rem;
+    /* border-top: 1px solid var(--border-color); Optional */
+}
+
+footer#site-footer a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+footer#site-footer a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+    body {
+        padding: 2rem 1rem;
+        font-size: 15px;
+    }
+    .content-wrapper {
+        max-width: 100%;
+    }
+    header#site-header h1 {
+        font-size: 1.9rem;
+    }
+    header.page-header h1 {
+        font-size: 1.7rem;
+    }
+    h2 {
+        font-size: 1.25rem;
+    }
+    h3 {
+        font-size: 1.1rem;
+    }
+    nav {
+        gap: 0.3rem 1rem;
+    }
+    blockquote {
+        padding: 0.6rem 1rem;
+    }
+    .dialogue-block {
+        padding: 1rem;
+    }
+}

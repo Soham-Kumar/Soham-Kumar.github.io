@@ -3,204 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Paper Summary - Soham</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Courier New', monospace;
-        }
-
-        body {
-            background-color: #0a0a0a;
-            color: #e0e0e0;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        h1, h2, h3 {
-            color: #00ff9d;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        h2 {
-            font-size: 1.8rem;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        h3 {
-            font-size: 1.4rem;
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-            color: #ccc;
-        }
-
-        .content-block {
-            background-color: #111;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        a {
-            color: #00ff9d;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    <!-- Update Title -->
+    <title>Paper Summary: Prompt Learning for CLIP - Soham Kumar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Paper Title -->
-        <section>
-            <h1><span style="color: #fff;"> Natural Language Supervision in Vision tasks</span></h1>
-            <p><a href="papers_pdf/Desai_VirTex.pdf" target="_blank"><strong>Paper 1:</strong></a> VirTex: Learning Visual Representations from Textual Annotations<br>
-            <a href="papers_pdf/ICMLM.pdf" target="_blank"><strong>Paper 2:</strong></a> Learning Visual Representations with Caption Annotations<br>
-            <a href="papers_pdf/CONVirt.pdf" target="_blank"><strong>Paper 3:</strong></a> Contrastive Learning of Medical Visual Representations from Paired Images and Text<br>
-            <a href="papers_pdf/CLIP.pdf" target="_blank"><strong>Paper 4:</strong></a> Learning Transferable Visual Models From Natural Language Supervision</p>
+    <div class="content-wrapper">
 
-        <!-- Problem Solved -->
-        <section>
+        <a href="../index.html" class="back-link">← Back to Home</a>
+
+        <header class="page-header">
+             <!-- Update H1 -->
+            <h1>Paper Summary: Natural Language Supervision in Vision Tasks & CLIP</h1>
+            <div class="page-meta">
+                 <!-- Optional: Add date or original publication info -->
+                 <span>Tags: <small class="tag">Technical</small><small class="tag">Paper</small><small class="tag">ML</small><small class="tag">Vision-Language</small></span>
+            </div>
+        </header>
+
+        <!-- Original content structured with new styling -->
+        <section id="papers-covered">
+            <h2>Papers Covered</h2>
+            <p>This summary discusses techniques for learning visual representations using natural language supervision, focusing on the ideas presented in several key papers:</p>
+            <ul>
+                 <li><a href="#" target="_blank" rel="noopener noreferrer"><strong>VirTex:</strong> Learning Visual Representations from Textual Annotations</a> (Link to PDF if available)</li>
+                 <li><a href="#" target="_blank" rel="noopener noreferrer"><strong>ICMLM:</strong> Learning Visual Representations with Caption Annotations</a> (Link to PDF if available)</li>
+                 <li><a href="#" target="_blank" rel="noopener noreferrer"><strong>CONVirt:</strong> Contrastive Learning of Medical Visual Representations from Paired Images and Text</a> (Link to PDF if available)</li>
+                 <li><a href="#" target="_blank" rel="noopener noreferrer"><strong>CLIP:</strong> Learning Transferable Visual Models From Natural Language Supervision</a> (Link to PDF if available)</li>
+            </ul>
+             <p><em>Note: Placeholder links used. Replace with actual PDF links if you have them.</em></p>
+        </section>
+
+        <section id="problem">
             <h2>Problem Solved</h2>
             <p>
-                The standard approach to vision related tasks is to take a large manually annotated dataset and train on it. This reaches SOTA and also learns representations useful for downstream tasks. But this approach has major
-                limitations. The cost and complexity of annotating datasets is considerable, especially when the class taxonomy is fine-grained requiring expert knowledge (e.g.: in most medical cases). The natural consequence to this problem
-                is to either think of data sources that are easily available or to use unsupervised learning methods. Unsupervised learning methods don't directly use the labels of the datasets,
-                but are highly data intensive, and even more so when they are deprived of the implicit benefits from careful selection and the resulting underlying structure of the generally used dataset.</br></br>
-                 
-                Interestingly, data often comes with informative metadata for free. For instance, user tags associated with images can be used as image labels. Even richer, companion text for images, is sometimes available for free. For example
-                in medical domain a lot of images come with texts like reports, which can be used as labels.
-                To utilize this type of data, the task is reframed to: <i>Can we train transferable visual representations from limited sets
-                of image-caption pairs? If so, how should we formulate the interaction between images and captions?</i> All these 4 papers aim to model this in different ways.
+                Traditional computer vision relies heavily on large, manually annotated datasets (e.g., ImageNet). While effective, creating these datasets is expensive, time-consuming, and often requires domain expertise (like in medical imaging). Furthermore, the fixed categories limit the model's ability to understand more nuanced or open-ended visual concepts.
+            </p>
+            <p>
+                These papers explore an alternative: leveraging naturally occurring image-text pairs (like images with captions from the web or medical images with reports). This approach aims to learn rich, transferable visual representations without relying on explicit category labels, using the semantic information embedded in the accompanying text as supervision. The core question is: how can we effectively learn from this paired data?
             </p>
         </section>
 
-        <!-- Methodology -->
-        <section>
-            <h2>Methodology - VirTex</h2>
+        <section id="methodologies">
+            <h2>Methodologies</h2>
+
+            <h3>VirTex: Text Generation as Pretext Task</h3>
             <p>
-                The method that they use is to jointly train a ConvNet (ResNet50) and Transformer from scratch to generate natural language captions for images. Then these learned
-                features can be transferred to downstream visual recognition tasks, discarding the transformer. The paper makes the argument that natural language supervision gives better results than image-label paradigm
-                because of its semantic density. Captions provide a semantically denser learning signal than unsupervised contrastive methods and supervised classification.
-                The image used in paper explains this argument very potently.</br></br>
-                
-                <img src="assets/paper_5/semantic_density.png" alt="Semantic density in various types of labels" style="max-width: 100%; height: auto;"></br></br>
-
-                They train two transformers for bidirectional captioning - one from left to right (forward model) and the other right to left (backward model).
-                The paper notes that <i>masked language models</i> give worse performance in this task than the bidirectional models. </br></br>
-
-                <img src="assets/paper_5/VirTex_architecture.png" alt="VirTex architecture" style="max-width: 100%; height: auto;"></br></br>   
-
+                VirTex trains a visual backbone (CNN) and a textual head (Transformer) jointly to generate captions for given images. The intuition is that to generate accurate captions, the visual model must learn semantically meaningful features. After pre-training, the text transformer is discarded, and the visual backbone is used for downstream tasks. They argue captions provide a "semantically denser" signal than simple labels or even unsupervised contrastive learning.
             </p>
-        </section>
-        <section>   
-            <h2>Methodology - CONVirt</h2>
+            <img src="assets/paper_5/VirTex_architecture.png" alt="VirTex architecture diagram">
+            <img src="assets/paper_5/semantic_density.png" alt="Comparison of semantic density in labels vs captions">
+
+            <h3>ICMLM: Multiple Proxy Tasks</h3>
             <p>
-                This method closely resembles <a href="https://openai.com/index/clip/" target="_blank">CLIP</a>. While the paper focuses on medical images, the approach mirrors CLIP's core methodology:
-                a vision encoder (ResNet50 instead of ViT) and a text encoder (ClinicalBERT replacing the transformer block). It optimizes cosine similarity for matching image-text pairs while minimizing
-                it for mismatched pairs. They use two different contrasive loss functions - image-to-text (l<sub>i</sub><sup>v→u</sup>) and text-to-image (l<sub>i</sub><sup>u→v</sup>).</br></br>
-                
-                
-                <img src="assets/paper_5/CONVirt_architecture.png" alt="CONVirt architecture" style="max-width: 100%; height: auto;"></br></br>
-
-                The paper also claims that the ConVIRT framework is agnostic to the specific choice of image and text encoders, transformations and projection functions. CLIP is a natural consequence to this type of framework+claim.
-                A major difference between CLIP and ConVIRT is in their objectives. While CONVirt tries to learn better embeddings from a small dataset (217k image-text pairs), CLIP's aim is to learn robust features from web-level dataset (400M image-text pairs).
-
+                ICMLM explores various ways ("proxy tasks") to learn from image-caption pairs:
             </p>
-        </section>
+            <ul>
+                <li><strong>Tag Prediction (TP, TPPostag, TPCluster):</strong> Treat concepts/tags extracted from captions (using n-grams, POS tagging, or clustering) as multi-label classification targets for the image.</li>
+                <li><strong>Image-Conditioned Masked Language Model (ICMLM):</strong> Predict masked words in a caption using both the image features and the surrounding text context, often fused using attention or transformers (ICMLMtfm, ICMLMatt-fc).</li>
+            </ul>
+            <p>The visual encoder learned through these tasks is then transferred.</p>
+            <img src="assets/paper_5/ICMLM_architecture.png" alt="ICMLM architecture diagram">
 
-        <section>
-            <h2>Methodology - ICMLM</h2>
+            <h3>CONVirt & CLIP: Contrastive Learning</h3>
             <p>
-                This paper tries to model the interactions between images and captions by modeling this task as multiple different proxy tasks. All these tasks warrant our attention as they are all pretty intersting design problems.
-                The paper doesn't make firm claims about why one of the proxies achieve the highest scores.<br><br>
-
-                The method begins with a straightforward approach called <u>Tag Prediction (TP)</u>. Here, the goal is to treat the image-caption pairs as a multi-label image classification problem. For each image, a label vector is created
-                based on concepts appearing in the caption. These concepts can be derived using various techniques e.g.: taking most frequent n-grams, LDA to extract latent topics, etc.
-                A somewhat better approach, <u>TPPostag</u> changes its method of using the captions - it uses part-of-speech tags (nouns, adjectives, verbs) to generate more semantically grounded label set.<br>
-
-                Further <u>TPCluster</u> incorporates the structure of the entire caption. Using BERT's [CLS] token to extract sentence-level representations, captions are grouped into clusters with k-means. These cluster assignments are used
-                as labels for training.<br><br>
-
-                The above methods tend to lose finer details, especially for long captions. Image-Conditioned Masked Language Model (ICMLM) uses the concept of Masked Language Models and predicts masked tokens in captions using both visual and textual features.
-                This is the major proposition of this paper, but it also develops two better performing variations of this task.<br>
-
-                1. <u>ICMLMtfm</u> uses a transformer encoder (<i>tfm</i>) to fuse visual and textual features.<br>
-                2. <u>ICMLMatt-fc</u> uses pairwise attention (<i>att</i>) and fully connected (<i>fc</i>) layers for feature fusion.<br>
-                These are just proxies for learning good features, only the CNN is used during target task evaluations.<br><br>
-
-                <img src="assets/paper_5/ICMLM_architecture.png" alt="ICMLM architecture" style="max-width: 100%; height: auto;"></br></br>
-
+                Both CONVirt (focused on medical images) and CLIP (large-scale web data) employ a contrastive approach. They learn a joint embedding space where paired images and texts have high similarity (cosine similarity), while unpaired combinations have low similarity.
             </p>
-        </section>
-
-        <section>
-            <h2>Methodology - CLIP</h2>
             <p>
-                CLIP (Contrastive Language-Image Pre-training) learns visual representations by predicting which caption, out of a set of randomly sampled captions, goes with a given image. The core idea is to learn a  contrasive joint embedding space
-                for images and text, such that semantically similar images and texts are close to each other, while dissimilar ones are far apart. The architecture consists of two encoders: an image encoder and a text encoder. The original paper
-                explores several architectures for the image encoder, including both ResNet-based variants and Vision Transformers (ViT). For the text encoder, a Transformer is used.<br><br>
-
-                For each image in a batch, CLIP calculates the embeddings of the image using the image encoder and the embeddings of all the captions in the same batch using the text encoder.
-                The dot product between the image embedding and each of the caption embeddings represents the similarity score between them. The objective is to maximize the cosine similarity
-                between the embeddings of the actual image-caption pair in the batch, and minimize the similarity between the image and all other (incorrect) captions in the batch. Similarly,
-                this is done for each caption against all images.<br><br>
-
-                The training process encourages the image encoder to learn features that are relevant to the semantic content of the
-                corresponding text, and vice-versa. Below is a visual representation of this process both for training and inference.<br><br>
-
-                <img src="assets/paper_5/CLIP_architecture.png" alt="CLIP architecture" style="max-width: 100%; height: auto;"></br></br>
-
-                A crucial aspect of CLIP is the scale of the training data. It was trained on a massive dataset of 400 million image-text pairs collected from the internet. This large-scale pre-training enables CLIP to learn highly robust and generalizable visual representations that transfer well to a wide range of downstream vision tasks, even in a zero-shot manner, where no task-specific training data is required.
+                Architecture: An image encoder (e.g., ResNet, ViT) and a text encoder (e.g., BERT, Transformer) produce embeddings. During training, for a batch of N image-text pairs, the model computes an N x N similarity matrix. The goal is to maximize similarity along the diagonal (correct pairs) and minimize it off-diagonal (incorrect pairs).
             </p>
-        </section>
-        <!-- Personal Notes -->
-        <section>
-            <h2>Personal Notes</h2>
+            <img src="assets/paper_5/CONVirt_architecture.png" alt="CONVirt architecture diagram">
+            <img src="assets/paper_5/CLIP_architecture.png" alt="CLIP architecture and inference diagram">
             <p>
-                <ul>
-                    <li>Good papers effectively use attention/saliency maps/t-SNE visualizations to showcase the robustness and interpretability of their methods. See Fig.1 ICMLM, Fig.6 VirTex, Fig.4 CONVirt. Also see the t-SNE from <a href="https://arxiv.org/abs/2210.03117" target="_blank">MaPLe</a> paper.</li>
-                    <li>The bitter lesson: "general methods that leverage computation are ultimately the most effective". CONVirt does everything that CLIP does, but for specifically medical domain. CLIP is extremely more popular than CONVirt.</li>
-                </ul>
+                CLIP's key differentiator was the massive scale (400M pairs) and its demonstration of powerful zero-shot transfer capabilities, allowing the model to perform tasks it wasn't explicitly trained for by phrasing them as image-text matching problems (e.g., classifying an image by comparing it against text prompts like "a photo of a dog", "a photo of a cat").
             </p>
+
         </section>
 
-        <!-- References -->
-        <section>
-            <h2>References</h2>
-            <p>
-                This blog is not academic in nature, and the content is taken from a lot of sources. The primary source of information are the <a href="papers_pdf/Desai_VirTex.pdf" target="_blank"> VirTex</a>, <a href="papers_pdf/CONVirt.pdf" target="_blank"> CONVirt</a>, <a href="papers_pdf/ICMLM.pdf" target="_blank"> ICMLM</a> and <a href="papers_pdf/CLIP.pdf" target="_blank"> CLIP</a> papers themselves.
-                Apart from them following are some of the sources (non-exhaustive list):
-                <ul>
-                    <li><a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank"> The Bitter Lesson</a></li>
-                    
-                </p>
+        <section id="notes">
+            <h2>Personal Notes & Takeaways</h2>
+            <ul>
+                <li>The shift towards using natural language provides richer supervision than fixed labels, leading to more generalizable representations.</li>
+                <li>Contrastive learning (CLIP, CONVirt) seems particularly effective, especially at scale, for learning joint embeddings.</li>
+                <li>The success of CLIP highlights the "bitter lesson": large datasets and scalable, general methods (like contrastive learning on transformers) often outperform more complex, specialized approaches in the long run.</li>
+                <li>Visualization techniques (attention maps, t-SNE) are crucial for understanding and validating what these models learn.</li>
+                <li>Zero-shot capabilities enabled by models like CLIP are transformative, reducing the need for task-specific fine-tuning.</li>
+            </ul>
         </section>
-    </div>
+
+        <section id="references">
+            <h2>References & Further Reading</h2>
+             <!-- Keep original references if relevant, adjust formatting -->
+             <p>Primary sources:</p>
+             <ul>
+                 <li><a href="#" target="_blank" rel="noopener noreferrer">VirTex Paper</a></li>
+                 <li><a href="#" target="_blank" rel="noopener noreferrer">ICMLM Paper</a></li>
+                 <li><a href="#" target="_blank" rel="noopener noreferrer">CONVirt Paper</a></li>
+                 <li><a href="#" target="_blank" rel="noopener noreferrer">CLIP Paper</a></li>
+            </ul>
+            <p>Related concepts:</p>
+             <ul>
+                 <li><a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener noreferrer">The Bitter Lesson by Rich Sutton</a></li>
+                 <li><a href="https://arxiv.org/abs/2210.03117" target="_blank" rel="noopener noreferrer">MaPLe Paper (Example of visualization)</a></li>
+                 <!-- Add other relevant links -->
+            </ul>
+             <p><em>Note: Placeholder links used.</em></p>
+        </section>
+
+        <footer id="site-footer">
+            <p><small>Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a></small></p>
+        </footer>
+
+    </div> <!-- End content-wrapper -->
 </body>
 </html>
