@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Update Title -->
+    <title>Paper Summary: Learning Vision from Language Supervision (VirTex, ICMLM, CONVirt, CLIP) - Soham Kumar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="../cyberpunk.css">
+</head>
+<body>
+    <div class="content-wrapper">
+
+        <a href="../index.html" class="back-link">← Back to Home</a>
+
+        <header class="page-header">
+             <!-- Update H1 -->
+            <h1>Paper Summary: Learning Visual Representations from Natural Language Supervision</h1>
+            <div class="page-meta">
+                 <!-- Optional: Add date or original publication info -->
+                 <span>Tags: <small class="tag">Technical</small><small class="tag">Paper</small><small class="tag">ML</small><small class="tag">Vision-Language</small><small class="tag">Self-Supervised Learning</small></span>
+            </div>
+        </header>
+
+        <!-- Original content structured with new styling -->
+        <section id="papers-covered">
+            <h2>Papers Covered</h2>
+            <p>This summary discusses techniques for learning visual representations using natural language supervision, focusing on the ideas presented in several key papers tracing an evolution of thought in this area:</p>
+            <ul>
+                 <li><a href="papers_pdf/Desai_VirTex.pdf" target="_blank" rel="noopener noreferrer"><strong>VirTex:</strong> Learning Visual Representations from Textual Annotations</a> (2020)</li>
+                 <li><a href="papers_pdf/ICMLM.pdf" target="_blank" rel="noopener noreferrer"><strong>ICMLM:</strong> Learning Visual Representations with Caption Annotations</a> (2020)</li>
+                 <li><a href="papers_pdf/CONVirt.pdf" target="_blank" rel="noopener noreferrer"><strong>CONVirt:</strong> Contrastive Learning of Medical Visual Representations from Paired Images and Text</a> (2020)</li>
+                 <li><a href="papers_pdf/CLIP.pdf" target="_blank" rel="noopener noreferrer"><strong>CLIP:</strong> Learning Transferable Visual Models From Natural Language Supervision</a> (2021)</li>
+            </ul>
+        </section>
+
+        <section id="problem">
+            <h2>The Problem: Beyond Fixed Labels</h2>
+            <p>
+                Traditional computer vision relies heavily on large, manually annotated datasets (e.g., ImageNet). While effective for specific benchmark tasks, creating these datasets is expensive, time-consuming, and often requires domain expertise (like in medical imaging). Furthermore, the fixed, discrete categories limit the model's ability to understand more nuanced, open-ended visual concepts or generalize to tasks unseen during training. This approach doesn't scale well to the complexity of the real world.
+            </p>
+            <p>
+                These papers explore an alternative, falling under the umbrella of self-supervised or weakly-supervised learning: using naturally occurring image-text pairs (like images with captions from the web or medical images with reports). This approach aims to learn rich, transferable visual representations without relying on explicit category labels, using the semantic information embedded in the accompanying text as supervision. The core question is: how can we effectively learn meaningful visual features from this abundant, but often noisy, paired data?
+            </p>
+        </section>
+
+        <section id="methodologies">
+            <h2>Methodologies: From Generation to Contrast</h2>
+            <p>The papers explored different ways to use the text signal to supervise the learning of the visual representation.</p>
+
+            <h3>VirTex: Text Generation as Pretext Task</h3>
+            <p>
+                VirTex trains a visual backbone (CNN) and a textual head (Transformer) jointly to generate captions for given images, treating caption generation as a pretext task. The intuition is that to generate accurate and coherent captions, the visual model must learn semantically meaningful features that capture not just objects but also their attributes and relationships described in the text. After pre-training, the text transformer head is discarded, and the learned visual backbone is transferred to downstream tasks. They argue captions provide a "semantically denser" signal than simple labels or even some unsupervised contrastive learning approaches of the time.
+            </p>
+            <img src="assets/paper_5/VirTex_architecture.png" alt="VirTex architecture diagram">
+            <img src="assets/paper_5/semantic_density.png" alt="Comparison of semantic density in labels vs captions">
+
+            <h3>ICMLM: Multiple Proxy Tasks</h3>
+            <p>
+                ICMLM explores various ways ("proxy tasks") to learn from image-caption pairs, comparing different strategies:
+            </p>
+            <ul>
+                <li><strong>Tag Prediction (TP, TPPostag, TPCluster):</strong> Treat concepts/tags extracted from captions (using n-grams, POS tagging, or clustering) as multi-label classification targets for the image. This simplifies the text signal but potentially loses context.</li>
+                <li><strong>Image-Conditioned Masked Language Model (ICMLM):</strong> Predict masked words in a caption using both the image features and the surrounding text context, often fused using attention or transformers (ICMLMtfm, ICMLMatt-fc). This retains more textual context but is a more complex task.</li>
+            </ul>
+            <p>The visual encoder learned through these proxy tasks during pre-training is then transferred.</p>
+            <img src="assets/paper_5/ICMLM_architecture.png" alt="ICMLM architecture diagram">
+
+            <h3>CONVirt & CLIP: Contrastive Learning</h3>
+            <p>
+                Both CONVirt (focused on medical images) and CLIP (large-scale web data) employ a contrastive learning approach, which proved highly effective and scalable. They learn a joint embedding space where paired images and texts have high similarity (e.g., using cosine similarity), while unpaired combinations have low similarity.
+            </p>
+            <p>
+                Architecture: An image encoder (e.g., ResNet, ViT) and a text encoder (e.g., BERT, Transformer) produce fixed-size embeddings. During training, for a batch of N image-text pairs, the model computes an N x N similarity matrix between all image embeddings and all text embeddings. The goal is to maximize similarity along the diagonal (correct pairs) and minimize it off-diagonal (incorrect pairs) using a contrastive loss like InfoNCE. This pushes the embeddings of correct (image, text) pairs closer together while pushing embeddings of incorrect pairs far apart in the shared space, forcing the models to focus on shared semantic features relevant to both modalities.
+            </p>
+            <img src="assets/paper_5/CONVirt_architecture.png" alt="CONVirt architecture diagram">
+            <img src="assets/paper_5/CLIP_architecture.png" alt="CLIP architecture and inference diagram">
+            <p>
+                CONVirt demonstrated the effectiveness of this approach in the specialized medical domain. CLIP's key differentiators were the massive scale of its pre-training dataset (400 million image-text pairs from the web) and its demonstration of powerful zero-shot transfer capabilities. This scale allowed CLIP to learn highly generalizable representations. For zero-shot inference, CLIP doesn't require task-specific training. Instead, classification tasks are reframed as image-text matching: the image embedding is compared against text embeddings generated from prompts like "a photo of a dog", "a photo of a cat", etc. The prompt with the highest cosine similarity determines the predicted class, enabling impressive performance on diverse tasks without fine-tuning.
+            </p>
+
+            <h3 id="comparative-overview">Comparative Overview</h3>
+            <ul>
+                <li><strong>Learning Objective:</strong>
+                    <ul>
+                        <li>VirTex: Generative (Image-to-Text Generation)</li>
+                        <li>ICMLM: Predictive (Tag Prediction or Masked Language Modeling)</li>
+                        <li>CONVirt/CLIP: Contrastive (Matching Correct Image-Text Pairs)</li>
+                    </ul>
+                </li>
+                <li><strong>Role of Text:</strong>
+                    <ul>
+                        <li>VirTex: Target output sequence to be generated.</li>
+                        <li>ICMLM: Source of labels (TP) or context/target for prediction (MLM).</li>
+                        <li>CONVirt/CLIP: Paired input to align with image in embedding space.</li>
+                    </ul>
+                </li>
+                 <li><strong>Scalability:</strong>
+                    <ul>
+                        <li>Generative/Predictive: Can be complex, potentially harder to scale massively.</li>
+                        <li>Contrastive: Proved highly scalable with large datasets and batches (CLIP).</li>
+                    </ul>
+                </li>
+                 <li><strong>Zero-Shot Ability:</strong>
+                    <ul>
+                        <li>VirTex/ICMLM: Primarily focused on transfer learning via fine-tuning the visual encoder.</li>
+                        <li>CLIP: Demonstrated strong zero-shot capabilities due to contrastive training at scale in a joint embedding space.</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </section>
+
+
+
+        <section id="notes">
+            <h2>Personal Notes & Takeaways</h2>
+            <ul>
+                <li>Good papers effectively use attention/saliency maps/t-SNE visualizations to showcase the robustness and interpretability of their methods (See Fig.1 ICMLM, Fig.6 VirTex, Fig.4 CONVirt). Also see the t-SNE from the <a href="https://arxiv.org/abs/2210.03117" target="_blank">MaPLe</a> paper for a related example. These help build intuition about what the model learns.</li>
+                <li>The bitter lesson: "general methods that leverage computation are ultimately the most effective". CONVirt successfully applied contrastive learning in the medical domain, but CLIP's application of a similar core idea at a vastly larger scale (more data + compute) led to more generalizable features and broader impact, overshadowing earlier work. Scale unlocked the impressive zero-shot capabilities.</li>
+            </ul>
+        </section>
+
+
+        <section id="references">
+            <h2>References & Further Reading</h2>
+             <p>Primary sources:</p>
+             <ul>
+                 <li><a href="https://arxiv.org/abs/2006.06666" target="_blank" rel="noopener noreferrer">VirTex Paper</a> (Desai & Johnson, 2020)</li>
+                 <li><a href="https://arxiv.org/abs/2008.01392" target="_blank" rel="noopener noreferrer">ICMLM Paper</a> (Sariyildiz et al., 2020)</li>
+                 <li><a href="https://arxiv.org/abs/2010.00747" target="_blank" rel="noopener noreferrer">CONVirt Paper</a> (Zhang et al., 2020)</li>
+                 <li><a href="https://arxiv.org/abs/2103.00020" target="_blank" rel="noopener noreferrer">CLIP Paper</a> (Radford et al., 2021)</li>
+            </ul>
+            <p>Related:</p>
+             <ul>
+                 <li><a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener noreferrer">The Bitter Lesson by Rich Sutton</a></li>
+                 <li><a href="https://openai.com/blog/clip/" target="_blank" rel="noopener noreferrer">OpenAI CLIP Blog Post</a></li>
+                 <li><a href="https://arxiv.org/abs/2210.03117" target="_blank" rel="noopener noreferrer">MaPLe Paper (Example of visualization in related follow-up work)</a></li>
+            </ul>
+        </section>
+
+        <footer id="site-footer">
+            <p><small>Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a></small></p>
+        </footer>
+
+    </div> <!-- End content-wrapper -->
+</body>
+</html>

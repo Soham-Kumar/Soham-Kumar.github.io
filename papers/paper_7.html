@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Paper Summary - Soham</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="../cyberpunk.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Paper Title -->
+        <section>
+            <h1><span style="color: #fff;"> DenseCLIP </span></h1>
+            <p><a href="papers_pdf/DenseCLIP.pdf" target="_blank"><strong>Paper:</strong></a> DenseCLIP: Language-Guided Dense Prediction with Context-Aware Promptin </p>
+
+
+        <!-- Problem Solved -->
+
+        <section>
+            <h2>Problem Solved</h2>
+            <p>
+                Extends <a href="paper_5.html" target="_blank">CLIP</a> to dense prediction tasks (tasks in which prediction is made for every pixel (or region) in an image,
+                instead of a single global prediction. e.g.: image segmentation). <u>The primary hurdle lies in bridging the gap between the instance-level image-text matching
+                objective of CLIP and the pixel-level prediction required for dense tasks.</u> Simply utilizing the image encoder of CLIP as a pre-trained backbone overlooks the
+                valuable language priors learned by the text encoder. Furthermore, the inherent cost and complexity of obtaining pixel-level annotations for dense prediction
+                tasks make effective pre-training even more critical. Therefore, the core problem addressed by DenseCLIP is how to effectively transfer the knowledge acquired
+                through large-scale image-text contrastive learning to dense prediction models, leveraging both visual and textual information to overcome the limitations of
+                relying solely on image-based pre-training or labor-intensive pixel-level annotations.
+            </p>
+        </section>
+
+        <section>
+            <h2>Methodology - DenseCLIP</h2>
+            <p>
+                DenseCLIP tackles the challenge of adapting image-text pre-training to dense prediction by reframing the problem from image-text matching to <i>pixel-text matching</i>.
+                The core idea is to create a pixel-text score map that reflects the correspondence between image pixels and textual descriptions. The method leverages a "language-compatible"
+                feature map extracted from the last layer of the CLIP image encoder. Although standard CLIP training typically uses the global feature from the image encoder, DenseCLIP
+                recognizes that earlier layers retain spatial information and can be aligned with language features. <br><br>
+
+                To achieve pixel-text matching, class names are used to create text prompts (e.g., "a photo of a [class name]"). These prompts are fed into the CLIP text encoder to obtain
+                text embeddings. The pixel-text score maps are then computed by calculating the similarity (using cosine similarity after normalization) between the language-compatible
+                image feature map and these text embeddings. These score maps, which have a lower spatial resolution, essentially represent a coarse segmentation based on textual cues.<br><br>
+                "Think of the pixel-text score maps as rough, text-based "hints" for where objects are in the image. DenseCLIP uses these hints in two main ways to train its models for tasks
+                like spotting objects or outlining things in a picture:<br><br>
+
+                <img src="assets/paper_7/DenseCLIP_architecture.png" alt="DenseCLIP architecture" style="max-width: 100%; height: auto;"></br></br>
+
+
+                <u>First</u>, they serve as the target for an auxiliary segmentation loss, encouraging the model to align its predictions with text-derived segmentation.<br>
+                <u>Second</u>, these score maps are concatenated with existing feature maps, directly incorporating language-based information into the visual representation.
+                This modified feature representation is then compatible with standard dense prediction architectures. Image context is used to refine text embeddings, improving
+                the accuracy of pixel-text matching.<br><br>
+                
+                The framework is model-agnostic, applicable to diverse dense prediction models and backbones, including CLIP and ImageNet pre-trained models.
+            </p>
+        </section>
+
+        <!-- Personal Notes -->
+        <section>
+            <h2>Personal Notes</h2>
+            <p>
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </p>
+        </section>
+
+        <!-- References -->
+        <section>
+            <h2>References</h2>
+            <p>
+                This blog is not academic in nature, and the content is taken from a lot of sources. The primary source of information are the <a href="https://arxiv.org/abs/2103.00350" target="_blank"> CoOp</a> and <a href="https://arxiv.org/abs/2203.05557" target="_blank"> CoCoOp</a> papers themselves.
+                Apart from them the following sources were used (non-exhaustive list):
+                <ul>
+                    <li><a href="https://arxiv.org/abs/2103.00020" target="_blank"> Learning Transferable Visual Models From Natural Language Supervision (CLIP)</a></li>
+                    
+                </p>
+        </section>
+    </div>
+</body>
+</html>

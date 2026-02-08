@@ -1,0 +1,449 @@
+/* Minimal Retro-Futuristic System Dashboard Theme */
+:root {
+    /* Minimal Retro Color Palette */
+    --bg-color: #000000; /* Pure black */
+    --text-primary: #ffffff; /* Clean white */
+    --text-secondary: #aaaaaa; /* Subtle gray */
+    --border-color: #444444; /* Thin grid lines */
+    --link-color: var(--text-primary);
+    --tag-bg: #000000;
+    --tag-text: var(--text-secondary);
+    --code-bg: #000000;
+    --blockquote-bg: #000000;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    font-size: 16px;
+}
+
+/* Wrapper for consistent width and centering */
+.content-wrapper {
+    width: 100%;
+    max-width: 900px;
+    padding: 1.5rem;
+    background-color: var(--bg-color);
+}
+
+/* --- Header (Main Site Header on Index) --- */
+header#site-header {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+header#site-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.profile-info {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.profile-info > div {
+    margin: 0.1rem 0;
+}
+
+.profile-info .professional {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* --- Navigation --- */
+nav {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    margin-top: 1rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.1s ease-in-out;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+nav a:hover,
+nav a:focus {
+    color: var(--bg-color);
+    background-color: var(--text-primary);
+    outline: none;
+}
+
+/* --- General Content Styling --- */
+section {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+/* Specific header for content pages (Paper/Blog) */
+header.page-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+header.page-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.page-meta {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+.page-meta span { margin-right: 1em;}
+.page-meta small { margin-right: 0em; }
+
+/* Back link for sub-pages */
+.back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    padding: 0.2rem 0.4rem;
+    transition: all 0.1s ease-in-out;
+    text-transform: uppercase;
+}
+.back-link:hover {
+    color: var(--bg-color);
+    background-color: var(--text-primary);
+}
+
+/* Headings */
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    margin-top: 1.2em;
+    margin-bottom: 0.6em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.2rem;
+}
+
+h3 {
+    font-size: 1.15rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
+
+/* Paragraphs and Links */
+p {
+    margin-bottom: 0.8rem;
+}
+
+a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.1s ease-in-out;
+}
+
+a:hover,
+a:focus {
+    color: var(--bg-color);
+    background-color: var(--text-primary);
+    outline: none;
+}
+
+/* Lists */
+ul, ol {
+    margin-bottom: 0.8rem;
+    padding-left: 1.2rem;
+}
+
+li {
+    margin-bottom: 0.3rem;
+}
+
+/* Card List (Used on Home Page) */
+.card-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.card-list li {
+    margin-bottom: 0.8rem;
+    padding: 0.3rem 0;
+    border: 1px solid var(--border-color);
+    padding: 0.4rem;
+}
+
+.card-list li:last-child {
+    margin-bottom: 0;
+}
+
+.card-list a {
+    color: var(--text-primary);
+    font-weight: 500;
+    display: inline;
+    margin-right: 0.3rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+}
+.card-list a:hover {
+    color: var(--bg-color);
+    background-color: var(--text-primary);
+}
+
+/* Tag Styling */
+small.tag {
+    font-size: 0.7em;
+    font-weight: 500;
+    display: inline-block;
+    white-space: nowrap;
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.1em 0.3em;
+    border: 1px solid var(--border-color);
+    vertical-align: baseline;
+    margin: 0 0.1rem 0.1rem 0;
+    line-height: 1.3;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.page-meta small.tag {
+    margin-left: 0.2rem;
+}
+
+/* Project Item Styling (Home Page) */
+.project-item .project-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+}
+
+.project-item .project-title a {
+    font-weight: inherit;
+    font-size: inherit;
+    color: inherit;
+    margin-right: 0;
+}
+.project-item .project-title a:hover {
+    color: var(--bg-color);
+    background-color: var(--text-primary);
+}
+
+.project-item .project-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+}
+
+.card-list li.project-item {
+    margin-bottom: 0.8rem;
+}
+
+/* --- Content Elements (for Paper/Blog) --- */
+
+/* Images */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1rem auto;
+    border: 1px solid var(--border-color);
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 2px solid var(--border-color);
+    margin: 1rem 0;
+    padding: 0.6rem 1rem;
+    background-color: var(--blockquote-bg);
+    color: var(--text-secondary);
+    font-style: normal;
+}
+
+blockquote p {
+    margin-bottom: 0.3rem;
+}
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+blockquote footer {
+    margin-top: 0.5rem;
+    font-style: normal;
+    font-size: 0.85em;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+blockquote footer::before {
+    content: "// ";
+}
+
+/* Code */
+code {
+    font-family: "Courier New", monospace;
+    font-size: 0.85em;
+    background-color: var(--code-bg);
+    padding: 0.1em 0.3em;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+pre code {
+    display: block;
+    padding: 0.8rem;
+    overflow-x: auto;
+    line-height: 1.4;
+}
+pre { 
+    margin-bottom: 0.8rem; 
+}
+
+/* Dialogue Block Styling (Blog) */
+.dialogue-block {
+    margin: 1rem 0;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--blockquote-bg);
+}
+
+.dialogue-block p {
+    margin-bottom: 0.5rem;
+}
+
+.dialogue-block p:last-child {
+    margin-bottom: 0;
+}
+
+.dialogue-speaker {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-right: 0.3em;
+}
+
+/* Superscript Links (References) */
+sup {
+    line-height: 0;
+    vertical-align: super;
+    font-size: 0.7em;
+}
+sup a {
+    text-decoration: none;
+    padding: 0 0.1em;
+    color: var(--text-primary);
+}
+sup a:hover {
+    color: var(--bg-color);
+    background-color: var(--text-primary);
+}
+
+/* --- Footer --- */
+footer#site-footer {
+    margin-top: 2rem;
+    text-align: left;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+footer#site-footer a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+footer#site-footer a:hover {
+    color: var(--bg-color);
+    background-color: var(--text-primary);
+}
+
+/* --- Paper Summary Specific Styles --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.content-block {
+    background-color: var(--blockquote-bg);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem 0.5rem;
+        font-size: 15px;
+    }
+    .content-wrapper {
+        padding: 1rem;
+    }
+    header#site-header h1 {
+        font-size: 1.5rem;
+    }
+    header.page-header h1 {
+        font-size: 1.3rem;
+    }
+    h2 {
+        font-size: 1.15rem;
+    }
+    h3 {
+        font-size: 1.05rem;
+    }
+    nav {
+        gap: 0.2rem 0.8rem;
+    }
+    blockquote {
+        padding: 0.5rem 0.8rem;
+    }
+    .dialogue-block {
+        padding: 0.6rem;
+    }
+}
